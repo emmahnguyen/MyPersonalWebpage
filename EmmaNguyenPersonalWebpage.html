@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Page</title>
+    <style type="text/css">
+        body {
+            font-family: Lucida Handwriting;
+            background-color: mistyrose;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            font-family: Algerian;
+            background-color: lightblue;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        img {
+            width: 200px;
+            border-radius: 50%;
+        }
+        .content {
+            background-color: white;
+            color: palevioletred;
+            padding: 20px;
+            margin-top: 20px;
+            border: ridge lightblue;
+            animation: fadeIn 2s ease-in-out;
+        }
+        a {
+            color: lightblue;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        a:hover {
+            color: darkblue;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .chatbox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background: white;
+            border: 2px solid lightblue;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+        }
+        .chatbox-header {
+            background: lightblue;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        .chatbox-body {
+            padding: 10px;
+            overflow-y: auto;
+            height: 250px;
+        }
+        .chatbox-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid lightblue;
+        }
+        .chatbox-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid lightblue;
+            border-radius: 5px;
+            outline: none;
+        }
+        .chatbox-input button {
+            background: lightblue;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chatbox-input button:hover {
+            background: darkblue;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message.user {
+            text-align: right;
+            color: darkblue;
+        }
+        .message.bot {
+            text-align: left;
+            color: palevioletred;
+        }
+        #toggleChatBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: lightblue;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Initially hidden */
+        }
+        #toggleChatBtn:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to My Personal Page</h1>
+</header>
+
+<div class="container">
+    <div class="content">
+        <h2>ABOUT ME</h2>
+        <img src="https://media.licdn.com/dms/image/v2/D5603AQG_EZDg4HKLuA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1725984100141?e=1738195200&v=beta&t=gF4w6PvffiMdpskMZTz0daJuqKrlrrxr4MLgqiGP1rY" alt="My Picture">
+        <p>Hello! My name is Emma Nguyen, with Computer Science major at the University of Houston Downtown. I am passionate about turning innovative ideas into real solutions. My journey in technology has led me to explore areas like theory of computation, operating and database systems, Python, JavaScript, and C++ programming. Currently, I am focused on developing a Shopping App, leveraging my skills with JetBrains IDE to create a practical and user-friendly application.
+	</p>In addition to my technical projects, I am actively involved in researching flood mitigation solutions for Houston. I am particularly interested in improving drainage systems and exploring effective flood prevention strategies. My research aims to support recommendations to Mayor John Whitmire, demonstrating my commitment to making a positive impact on my community.
+	</p>I thrive on solving complex problems with technology and turning challenges into opportunities for improvement. My approach is characterized by a meticulous attention to detail, a strong work ethic, and an insatiable curiosity. I believe my practical experience, technical expertise, and passion for innovation make me well-suited for any role that requires dedication and a forward-thinking mindset. I am excited about the potential to contribute to meaningful projects and collaborate with others to achieve great results.
+	</p>Feel free to explore more about me through the link below!
+        </p>
+        <p>
+
+        <p><a href="https://www.linkedin.com/in/emma-nguyen-84245929a/">Connect with me on LinkedIn</a></p>
+    </div>
+</div>
+
+<!-- Chatbox -->
+<div class="chatbox" id="chatbox">
+    <div class="chatbox-header">
+        <span>Chat with Me!</span>
+        <button onclick="toggleChat()">✖</button>
+    </div>
+    <div class="chatbox-body" id="chatboxBody"></div>
+    <div class="chatbox-input">
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<!-- Toggle Button -->
+<button id="toggleChatBtn" onclick="toggleChat()">Chat with Me</button>
+
+<script>
+    const chatbox = document.getElementById('chatbox');
+    const toggleChatBtn = document.getElementById('toggleChatBtn');
+
+    function toggleChat() {
+        if (chatbox.style.display === 'none') {
+            chatbox.style.display = 'block';
+            toggleChatBtn.style.display = 'none';
+        } else {
+            chatbox.style.display = 'none';
+            toggleChatBtn.style.display = 'block';
+        }
+    }
+
+    function sendMessage() {
+        const chatboxBody = document.getElementById('chatboxBody');
+        const chatInput = document.getElementById('chatInput');
+        const userMessage = chatInput.value.trim();
+
+        if (!userMessage) return;
+
+        // Display user message
+        appendMessage(userMessage, 'user');
+
+        // Generate bot response
+        const botMessage = getBotResponse(userMessage);
+        setTimeout(() => appendMessage(botMessage, 'bot'), 500);
+
+        chatInput.value = ''; // Clear input
+    }
+
+    function appendMessage(message, sender) {
+        const chatboxBody = document.getElementById('chatboxBody');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender);
+        messageElement.innerText = message;
+        chatboxBody.appendChild(messageElement);
+        chatboxBody.scrollTop = chatboxBody.scrollHeight; // Auto-scroll to the bottom
+    }
+
+    function getBotResponse(message) {
+        const lowerCaseMessage = message.toLowerCase();
+        if (lowerCaseMessage.includes('hello')) {
+            return 'Hi there! How can I assist you?';
+        } else if (lowerCaseMessage.includes('projects')) {
+            return 'I am working on a Shopping App and a skincare app!';
+        } else if (lowerCaseMessage.includes('contact')) {
+            return 'You can contact me via LinkedIn or through the contact form.';
+        } else if (lowerCaseMessage.includes('bye')) {
+            return 'Goodbye! Have a great day!';
+        } else {
+            return 'I am here to help! Feel free to ask me anything about my work.';
+        }
+    }
+
+    // Initialize chatbox state
+    chatbox.style.display = 'none';
+    toggleChatBtn.style.display = 'block';
+</script>
+
+</body>
+
+<head>
+      <meta charset = "utf-8">
+      <title>Lists</title>
+
+<body>
+      <div class="container">
+      <div class="projects">
+            <h2>MY PROJECTS</h2>
+            <ul>
+                <li><strong>Shopping App:</strong> Developed using HTML, CSS, JavaScript, and C++.</li>
+                <li><strong>Web Design:</strong> Designed websites by using Canva and WIX.</li>
+
+            </ul>
+</body>
+
+<head>
+      <meta charset = "utf-8">
+      <title>Lists</title>
+
+<body>
+
+
+
+<head>
+      <meta charset="utf-8">
+      <title>Form</title>
+
+
+ <body>
+      <h2>CONTACT ME</h2>
+      <p>Please put your name, email, and questions so that I can contact you.</p>
+
+      <!-- turn autocomplete on -->
+      <form method = "post" autocomplete = "on">
+
+         <p><label>First Name:
+            <input type = "text" id = "firstName" 
+               placeholder = "First name" /> 
+            </label></p>
+
+         <p><label>Last Name:
+            <input type = "text" id = "lastName" 
+               placeholder = "Last name" /> 
+            </label></p>
+
+         <p><label>Email:
+            <input type = "email" id = "email" 
+               placeholder = "name@domain.com" /> 
+            </label></p>
+
+	 <p><label>Question about Programming:
+            <input type = "text" id = "question" 
+               placeholder = "Question" /> 
+            </label></p>
+
+	 <p><input type = "submit" value = "Submit" />
+            <input type = "reset" value = "Clear" /></p>   
+      </form>
+   </body>
+
+
+</html>
